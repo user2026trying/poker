@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/* Ngjyrat dhe fontet e platformës (identiteti vizual) */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-950: #07090d;
+  --color-ink-900: #0b0f15;
+  --color-ink-800: #11161f;
+  --color-ink-700: #19202c;
+  --color-ink-600: #252e3d;
+  --color-ink-500: #3a4558;
+  --color-mist: #8b96a8;
+
+  --color-gold-300: #f0d589;
+  --color-gold-400: #e2c06a;
+  --color-gold-500: #d0a74a;
+  --color-gold-600: #a8822f;
+
+  --color-felt-400: #1f8a5c;
+  --color-felt-500: #17704a;
+  --color-felt-700: #0d4a31;
+  --color-felt-900: #072a1c;
+
+  --animate-rise: rise 0.35s ease-out both;
+  --animate-pop: pop 0.25s ease-out both;
+  --animate-deal: deal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-glow: glow 1.6s ease-in-out infinite;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes deal {
+    from { opacity: 0; transform: translateY(-34px) rotate(-10deg) rotateY(80deg) scale(0.7); }
+    to { opacity: 1; transform: translateY(0) rotate(0) rotateY(0) scale(1); }
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 0 2px var(--color-gold-400), 0 0 14px 2px rgba(226, 192, 106, 0.55); }
+    50% { box-shadow: 0 0 0 2px var(--color-gold-300), 0 0 26px 6px rgba(226, 192, 106, 0.85); }
+  }
+  @keyframes shrink {
+    to { width: 0; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: #e8ecf2;
+  background:
+    radial-gradient(1100px 600px at 50% -10%, rgba(208, 167, 74, 0.09), transparent 60%),
+    radial-gradient(900px 700px at 100% 100%, rgba(23, 112, 74, 0.10), transparent 60%),
+    var(--color-ink-950);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+/* Tavolina: drita përreth, korniza prej lëkure, vija e artë, felt me teksturë */
+.table-glow {
+  background: radial-gradient(closest-side, rgba(31, 138, 92, 0.22), transparent 75%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.rail {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.16), transparent 55%),
+    linear-gradient(175deg, #4a3423 0%, #2a1c12 30%, #120b06 70%, #2e1f14 100%);
+  box-shadow:
+    0 40px 70px -25px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(0, 0, 0, 0.7),
+    inset 0 2px 2px rgba(255, 255, 255, 0.14),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.7);
+}
+.inlay {
+  background: linear-gradient(160deg, #f0d589, #8a6a25 45%, #e2c06a 70%, #6e531b);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.55);
+}
+.felt {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 38%, #27a06b 0%, var(--color-felt-500) 38%, var(--color-felt-700) 78%, var(--color-felt-900) 100%);
+  box-shadow: inset 0 0 70px 10px rgba(0, 0, 0, 0.6), inset 0 6px 14px rgba(0, 0, 0, 0.55);
+}
+.stitch {
+  border: 1.5px dashed rgba(240, 213, 137, 0.2);
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-ink-600);
+  background: var(--color-ink-900);
+  padding: 0.7rem 0.9rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input:focus {
+  border-color: var(--color-gold-500);
+  box-shadow: 0 0 0 3px rgba(208, 167, 74, 0.18);
+}
+.input::placeholder { color: var(--color-ink-500); }
+
+/* Kartat */
+.card-face {
+  background: linear-gradient(155deg, #ffffff 0%, #fbfaf6 55%, #ebe8df 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.18),
+    0 5px 10px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.4);
+  font-family: "Sora", "Inter", sans-serif;
+}
+.card-back {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(240, 213, 137, 0.9) 0 9%, transparent 10%),
+    repeating-linear-gradient(45deg, rgba(240, 213, 137, 0.22) 0 1.5px, transparent 1.5px 5px),
+    repeating-linear-gradient(-45deg, rgba(240, 213, 137, 0.22) 0 1.5px, transparent 1.5px 5px),
+    linear-gradient(160deg, #7a1422, #3d0810);
+  box-shadow:
+    inset 0 0 0 2px #f4f1e8,
+    inset 0 0 0 3px rgba(122, 20, 34, 0.9),
+    inset 0 0 0 4px rgba(240, 213, 137, 0.7),
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Rrëshqitësi i shumës së bastit */
+input[type="range"].bet-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-ink-600);
+  outline: none;
+}
+input[type="range"].bet-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: linear-gradient(var(--color-gold-300), var(--color-gold-500));
+  border: 2px solid var(--color-ink-950);
+  cursor: pointer;
+}
+input[type="range"].bet-slider::-moz-range-thumb {
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: var(--color-gold-400);
+  border: 2px solid var(--color-ink-950);
+  cursor: pointer;
+}
